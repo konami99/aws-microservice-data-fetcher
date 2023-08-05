@@ -8,7 +8,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: prod
+    environment: staging
     steps:
       - name: Configure AWS Credentials for Production
         uses: aws-actions/configure-aws-credentials@v2
