@@ -11,7 +11,7 @@ Globals:
     Timeout: 3
 
 Resources:
-  HelloWorldFunction:
+  GetWeatherFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
       CodeUri: src/
@@ -26,7 +26,41 @@ Resources:
         Target: "es2020"
         Sourcemap: true
         EntryPoints: 
-        - app.ts
+          - app.ts
+
+  GetWeatherFunctionSchedule:
+    Type: AWS::Scheduler::Schedule
+    Properties:
+      Name: 'GetWeatherFunctionSchedule'
+      ScheduleExpression: 'rate(1 minute)'
+      FlexibleTimeWindow:
+        Mode: 'OFF'
+      Target:
+        Arn: !GetAtt GetWeatherFunction.Arn
+        RoleArn: !GetAtt GetWeatherFunctionScheduleRole.Arn
+
+  GetWeatherFunctionScheduleRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - scheduler.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Policies:
+        - PolicyName: GetWeatherFunctionScheduleRolePolicy
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 'lambda:InvokeFunction'
+                Resource:
+                  - !GetAtt GetWeatherFunction.Arn
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
@@ -35,9 +69,9 @@ Outputs:
   # HelloWorldApi:
   #   Description: "API Gateway endpoint URL for Prod stage for Hello World function"
   #   Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
-  HelloWorldFunction:
+  GetWeatherFunction:
     Description: "Hello World Lambda Function ARN"
-    Value: !GetAtt HelloWorldFunction.Arn
-  HelloWorldFunctionIamRole:
+    Value: !GetAtt GetWeatherFunction.Arn
+  GetWeatherFunctionIamRole:
     Description: "Implicit IAM Role created for Hello World function"
-    Value: !GetAtt HelloWorldFunctionRole.Arn
+    Value: !GetAtt GetWeatherFunctionRole.Arn
