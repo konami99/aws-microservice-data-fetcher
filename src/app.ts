@@ -1,17 +1,33 @@
-import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
+import { EventBridgeClient, ActivateEventSourceCommand, PutEventsCommandInput, PutEventsCommand } from "@aws-sdk/client-eventbridge";
 
-/**
- *
- * Event doc: https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html#api-gateway-simple-proxy-for-lambda-input-format
- * @param {Object} event - API Gateway Lambda Proxy Input Format
- *
- * Return doc: https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html
- * @returns {Object} object - API Gateway Lambda Proxy Output Format
- *
- */
+//AWS.config.update({region: 'us-west-2'});
+//const eventbridge = new AWS.EventBridge();
 
-export const lambdaHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+const client = new EventBridgeClient({ region: 'us-west-2' });
+
+export const lambdaHandler = async (event: any): Promise<any> => {
 	try {
+
+		const entry = {
+			Entries: [ 
+				{
+					Detail: JSON.stringify({
+						"message": "Hello from publisher",
+						"state": "new"
+					}),
+					DetailType: 'Message',
+					EventBusName: 'default',
+					Source: 'demo.event',
+				}
+			]
+		}
+
+		const command = new PutEventsCommand(entry);
+
+    const response = await client.send(command);
+
+		console.log('Event sent to EventBridge:', response);
+
 		return {
 			statusCode: 200,
 			body: JSON.stringify({
