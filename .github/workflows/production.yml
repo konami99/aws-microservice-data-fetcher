@@ -25,7 +25,7 @@ jobs:
           role-session-name: ProductionDeploymentSession
       - run: sam build --use-container
 
-      - run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset
+      - run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --role-arn ${{ env.AWS_ROLE_TO_ASSUME }}
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
