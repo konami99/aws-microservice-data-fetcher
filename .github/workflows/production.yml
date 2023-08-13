@@ -29,6 +29,14 @@ jobs:
           export AWS_SECRET_ACCESS_KEY=$(echo $CREDENTIAL | awk '{print $2}')
           export AWS_SESSION_TOKEN=$(echo $CREDENTIAL | awk '{print $3}')
           export SESSION_EXPIRATION=$(echo $CREDENTIAL | awk '{print $4}')
+
+          
+
+          echo "AWS_ACCESS_KEY_ID=$(echo $CREDENTIAL | awk '{print $1}')" >> $GITHUB_ENV
+          echo "AWS_SECRET_ACCESS_KEY=$(echo $CREDENTIAL | awk '{print $2}')" >> $GITHUB_ENV
+          echo "AWS_SESSION_TOKEN=$(echo $CREDENTIAL | awk '{print $3}')" >> $GITHUB_ENV
+          echo "SESSION_EXPIRATION=$(echo $CREDENTIAL | awk '{print $4}')" >> $GITHUB_ENV
+
       - name: Checkout
         uses: actions/checkout@v3
 
