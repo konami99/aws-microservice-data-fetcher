@@ -12,6 +12,7 @@ jobs:
     env:
       AWS_ACCESS_KEY_ID: ${{ vars.AWS_ACCESS_KEY_ID_TOOLS }}
       AWS_SECRET_ACCESS_KEY: ${{ vars.AWS_SECRET_ACCESS_KEY_TOOLS }}
+      AWS_REGION: us-west-2
     steps:
       - run: |
           CREDENTIAL=$(aws sts assume-role \
