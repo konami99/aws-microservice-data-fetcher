@@ -11,8 +11,8 @@ jobs:
     environment: prod
     steps:
       - run: |
-          echo "${AWS_ACCESS_KEY_ID_TOOLS}"
-          echo "${AWS_SECRET_ACCESS_KEY_TOOLS}"
+          echo "${{ secrets.AWS_ACCESS_KEY_ID_TOOLS }}"
+          echo "${{ secrets.AWS_SECRET_ACCESS_KEY_TOOLS }}"
           export AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID_TOOLS}"
           export AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY_TOOLS}"
           export AWS_REGION=us-west-2
