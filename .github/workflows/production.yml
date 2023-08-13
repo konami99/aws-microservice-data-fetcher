@@ -20,9 +20,6 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_TOOLS }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_TOOLS }}
           aws-region: us-west-2
-          role-to-assume: ${{ env.AWS_ROLE_TO_ASSUME }}
-          role-duration-seconds: 1200
-          role-session-name: ProductionDeploymentSession
       - run: sam build --use-container
 
       - run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --role-arn "$AWS_ROLE_TO_ASSUME"
