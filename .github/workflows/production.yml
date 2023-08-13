@@ -22,6 +22,10 @@ jobs:
             --output text \
             --query 'Credentials.[AccessKeyId,SecretAccessKey,SessionToken,Expiration]')
           
+          export AWS_ACCESS_KEY_ID=$(echo $CREDENTIAL | awk '{print $1}')
+          export AWS_SECRET_ACCESS_KEY=$(echo $CREDENTIAL | awk '{print $2}')
+          export AWS_SESSION_TOKEN=$(echo $CREDENTIAL | awk '{print $3}')
+          export SESSION_EXPIRATION=$(echo $CREDENTIAL | awk '{print $4}')
       - name: Checkout
         uses: actions/checkout@v3
 
