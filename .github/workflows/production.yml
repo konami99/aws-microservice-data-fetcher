@@ -17,7 +17,7 @@ jobs:
       - run: |
           CREDENTIAL=$(aws sts assume-role \
             --duration-seconds 900 \
-            --role-arn "$AWS_ROLE_TO_ASSUME" \
+            --role-arn arn:aws:iam::011079945432:role/GitHubDeploymentProduction \
             --role-session-name SAMSession \
             --output text \
             --query 'Credentials.[AccessKeyId,SecretAccessKey,SessionToken,Expiration]')
