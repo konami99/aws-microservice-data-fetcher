@@ -9,11 +9,11 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     environment: prod
+    env:
+      AWS_ACCESS_KEY_ID: ${{ vars.AWS_ACCESS_KEY_ID_TOOLS }}
+      AWS_SECRET_ACCESS_KEY: ${{ vars.AWS_SECRET_ACCESS_KEY_TOOLS }}
     steps:
       - run: |
-          export AWS_ACCESS_KEY_ID="echo $AWS_ACCESS_KEY_ID_TOOLS"
-          export AWS_SECRET_ACCESS_KEY="echo $AWS_SECRET_ACCESS_KEY_TOOLS"
-
           CREDENTIAL=$(aws sts assume-role \
             --duration-seconds 900 \
             --role-arn "$AWS_ROLE_TO_ASSUME" \
