@@ -6,13 +6,13 @@ const client = new EventBridgeClient();
 export const lambdaHandler = async (event: any): Promise<any> => {
 	try {
 
-		const city = 'sydney';
+		const city = 'Sydney';
 		const unit = 'metric';
 		const apiKey = 'e87991825328b10ee03463453976a4bb';
 
 		const weatherData = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${unit}`);
 
-		const total = { ...weatherData.data["main"], time: new Date() };
+		const total = { ...weatherData.data["main"], city: city, time: new Date() };
 		console.log('weatherData:', JSON.stringify(total));
 
 		const entry = {
