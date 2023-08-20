@@ -12,7 +12,7 @@ export const lambdaHandler = async (event: any): Promise<any> => {
 
 		const weatherData = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${unit}`);
 
-		const total = { ...weatherData.data["main"], city: city, time: new Date() };
+		const total = { ...weatherData.data["main"], city: city, time: new Date().getTime() };
 		console.log('weatherData:', JSON.stringify(total));
 
 		const entry = {
