@@ -28,3 +28,16 @@ Specifying staging environment, GitHub actions will pull credentials from stagin
 
 Next SAM will assume role to deploy to prod and staging.
 <img width="977" alt="Screen Shot 2023-09-03 at 6 14 56 pm" src="https://github.com/konami99/aws-microservice-data-fetcher/assets/166879/66f2140d-e213-4753-8ad5-dc4a458a0514">
+
+## SAM template
+
+`template.yaml`
+
+Let's go through the important part in SAM template.
+
+This part creates a Lambda function and gives it permission to push events to EventBridge.
+<img width="1026" alt="Screen Shot 2023-09-03 at 6 19 20 pm" src="https://github.com/konami99/aws-microservice-data-fetcher/assets/166879/88f89618-bd9d-4d6e-bfc7-bd576a1167d7">
+
+This part creates an EventBridge scheduler and gives it necessary permission to invoke Lambda.
+<img width="748" alt="Screen Shot 2023-09-03 at 6 21 40 pm" src="https://github.com/konami99/aws-microservice-data-fetcher/assets/166879/0e35d002-606e-4ee8-84b8-4f947389b077">
+
