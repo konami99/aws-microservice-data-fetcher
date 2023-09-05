@@ -41,3 +41,23 @@ This part creates a Lambda function and gives it permission to push events to Ev
 This part creates an EventBridge scheduler and gives it necessary permission to invoke Lambda.
 <img width="748" alt="Screen Shot 2023-09-03 at 6 21 40 pm" src="https://github.com/konami99/aws-microservice-data-fetcher/assets/166879/0e35d002-606e-4ee8-84b8-4f947389b077">
 
+## Passing env vars from GitHub secrets to SAM
+The openweathermap API key is passed from GitHub secrets to Lambda so Lambda can call the API to get the weather data.
+
+To define env vars, first create `Parameters` and `Environment: Variables` blocks in SAM template:
+
+`template.yaml`
+
+![Screen Shot 2023-09-05 at 5 05 50 pm](https://github.com/konami99/aws-microservice-data-fetcher/assets/166879/73e09eb2-cf71-44de-a7c9-33d199b7683f)
+
+Then, in GitHub workflows, use `--parameter-overrides` to pass env var. Of course, you can use different API key for staging and production environments.
+
+`.github/workflows/production.yml`
+
+![Screen Shot 2023-09-05 at 5 07 13 pm](https://github.com/konami99/aws-microservice-data-fetcher/assets/166879/109ab448-2538-4683-aafa-f7d41e1ac5e0)
+
+Finally, you will be able to use env var in the Lambda:
+
+`src/app.ts`
+
+![Screen Shot 2023-09-05 at 5 06 45 pm](https://github.com/konami99/aws-microservice-data-fetcher/assets/166879/b2da8a7f-b77b-45c4-a4a9-af4811e53ef3)
