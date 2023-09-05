@@ -52,7 +52,7 @@ jobs:
 
       - name: SAM Deploy
         run: |
-          sam deploy --no-confirm-changeset --no-fail-on-empty-changeset
+          sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --parameter-overrides WeatherDataApiKey="${{ secrets.WEATHER_DATA_API_KEY }}"
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2

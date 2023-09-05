@@ -8,7 +8,7 @@ export const lambdaHandler = async (event: any): Promise<any> => {
 
 		const city = 'Sydney';
 		const unit = 'metric';
-		const apiKey = 'e87991825328b10ee03463453976a4bb';
+		const apiKey = process.env.WEATHER_DATA_API_KEY;
 
 		const weatherData = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${unit}`);
 
